@@ -368,28 +368,30 @@ if (picker) {
     showNotification('Logged out successfully', 'success');
   }
 
-  toggleAnonymousMode() {
+toggleAnonymousMode() {
     this.isAnonymousMode = !this.isAnonymousMode;
     const incognitoBtn = document.getElementById('incognitoBtn');
     if (incognitoBtn) {
-      incognitoBtn.textContent = this.isAnonymousMode
-        ? 'Exit Incognito'
-        : 'Go Incognito';
-      incognitoBtn.title = this.isAnonymousMode
-        ? 'Exit Incognito'
-        : 'Go Incognito';
+        // Toggle highlight class
+        incognitoBtn.classList.toggle('incognito-on', this.isAnonymousMode);
+        // Tooltip only
+        incognitoBtn.title = this.isAnonymousMode
+            ? 'You are anonymous'
+            : 'Go Incognito';
+        // Don't touch .textContent (icon only)
     }
     if (this.isAnonymousMode) {
-      displaySystemMessage('You are now chatting as Anonymous');
-      showNotification('Switched to incognito mode', 'success');
+        displaySystemMessage('You are now chatting as Anonymous');
+        showNotification('Switched to incognito mode', 'success');
     } else {
-      displaySystemMessage(
-        'You are now chatting as ' +
-          (this.currentUser ? this.currentUser.username : 'Guest')
-      );
-      showNotification('Exited incognito mode', 'success');
+        displaySystemMessage(
+            'You are now chatting as ' +
+              (this.currentUser ? this.currentUser.username : 'Guest')
+        );
+        showNotification('Exited incognito mode', 'success');
     }
-  }
+}
+
 
   updateUserStatus(userId, isOnline) {
     const messages = document.querySelectorAll('.message');

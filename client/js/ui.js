@@ -17,48 +17,49 @@ export function showChat() {
 }
 
 export function displayMessage(message, scroll = true) {
-  const messagesWrapper = document.getElementById('messagesWrapper');
-  const messageEl = document.createElement('div');
+    const messagesWrapper = document.getElementById('messagesWrapper');
+    const messageEl = document.createElement('div');
 
-  const isOwn = message.sender.id === this.currentUser.id;
-  const displayedUsername = message.isAnonymous ? 'Anonymous' : message.sender.username;
+    const isOwn = message.sender.id === this.currentUser.id;
+    const displayedUsername = message.isAnonymous ? 'Anonymous' : message.sender.username;
 
-  messageEl.className = `message${isOwn ? ' own' : ''}`;
-  messageEl.setAttribute('data-sender-id', message.sender.id);
+    messageEl.className = `message${isOwn ? ' own' : ''}`;
+    messageEl.setAttribute('data-sender-id', message.sender.id);
 
-  // Online/offline dot class
-  const onlineDotClass = message.sender.isOnline ? 'status-dot active' : 'status-dot';
-  // Avatar
-  const avatar = generateAvatar(displayedUsername);
-  const timestamp = formatTime(new Date(message.createdAt));
+    // Online/offline dot class
+    const onlineDotClass = message.sender.isOnline ? 'status-dot active' : 'status-dot';
+    // Avatar - only show for others' messages
+    const avatar = !isOwn ? generateAvatar(displayedUsername) : '';
+    const timestamp = formatTime(new Date(message.createdAt));
 
-  // --- Add double check mark if it's your own message ---
-  const doubleTick =
-    isOwn
-      ? `<span class="double-tick" title="Delivered">&#10003;&#10003;</span>`
-      : '';
+    // Double check mark for own messages
+    const doubleTick = isOwn ? `<span class="double-tick" title="Delivered">&#10003;&#10003;</span>` : '';
 
-  messageEl.innerHTML = `
+messageEl.innerHTML = `
+  ${!isOwn ? `
     <div class="user-avatar">
       ${avatar}
       <span class="${onlineDotClass}" title="${message.sender.isOnline ? "Online" : "Offline"}"></span>
     </div>
-    <div class="message-content">
-      <div class="message-header">
-        <span class="username">${escapeHtml(displayedUsername)}</span>
+  ` : ''}
+  <div class="message-content">
+    <div class="message-header">
+      <span class="username">${escapeHtml(displayedUsername)}</span>
+    </div>
+    <div class="message-body-meta">
+      <div class="message-main-text">${escapeHtml(message.content)}</div>
+      <div class="message-meta">
         <span class="timestamp">${timestamp}</span>
-      </div>
-      <div class="message-text">
-        ${escapeHtml(message.content)}
         ${doubleTick}
       </div>
     </div>
-  `;
+  </div>
+`;
 
-  messagesWrapper.appendChild(messageEl);
-  if (scroll) scrollToBottom();
+
+    messagesWrapper.appendChild(messageEl);
+    if (scroll) scrollToBottom();
 }
-
 
 export function displaySystemMessage(content) {
   const messagesWrapper = document.getElementById('messagesWrapper');

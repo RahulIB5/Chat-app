@@ -249,8 +249,8 @@ body {
     border: none;
     cursor: pointer;
     color: var(--text);
-    padding: 5-8px;
-    border-radius: 4px;
+    padding: 5px;
+    border-radius: 40%;
     transition: all 0.3s ease;
     font-size: 25px;
 }
@@ -282,18 +282,20 @@ body {
 .group-details h3 {
     font-size: 16px;
     font-weight: 600;
-    color: var(--text);
+    color: var(--own-message-bg);
     margin-bottom: 2px;
 }
 
 .group-details p {
+    display: none;
     font-size: 12px;
-    color: var(--secondary-text);
+    color: var(--own-message-bg);
 }
 
 .messages-container {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 10px 20px;
     background: var(--background);
     position: relative;
@@ -356,17 +358,95 @@ body {
     margin: 0 10px;
 }
 
-.message-content {
+/* .message-content {
+     display: flex;
+    flex-direction: column;
     flex: 1;
     max-width: 70%;
     background: var(--message-bg);
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 0px;
+    margin-right: 15px;
+} */
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 75vw;
+    padding: 12px 18px 8px 16px;
+    position: relative;
+    background: var(--message-bg);
+    border-radius: 18px 0px 18px 18px;
 }
 
-.message.own .message-content {
-    background: var(--own-message-bg);
+/* .message-main-text {
+    text-align: left;
+    margin-bottom: 8px;
+    word-break: break-word;
+    color: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+} */
+
+.message-main-text {
+    font-size: 15.5px;
+    font-weight: 400;
+    word-break: break-word;
+    margin-bottom: 18px; /* clear gap between text and meta */
+    line-height: 1.5;
+    /* For own messages, align right */
+    text-align: right;
 }
+
+/* .message-meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+} */
+
+.message-meta {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    font-size: 12px;
+    align-items:last baseline;
+    /* Place meta on lower left for own */
+    justify-content: flex-end;
+    color: var(--secondary-text);
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.message-content .timestamp {
+    font-size: 12px;
+    color: var(--secondary-text);
+    margin: 0;
+}
+
+
+/* .message.own .message-content {
+    background: var(--own-message-bg);
+    position: relative;
+    border-radius: 8px 8px 0 8px;
+    padding: 8px 12px 8px 16px;
+}
+
+.message.own .message-content:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: -10px; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid var(--own-message-bg);
+    border-radius: 0 0 0 5px;
+} */
 
 .message-header {
     display: flex;
@@ -382,14 +462,55 @@ body {
 }
 
 .message.own .username {
+    display: none;
     color: var(--own-message-text);
 }
 
-.timestamp {
+.message.own .user-avatar {
+    display: none;
+}
+
+.message:not(.own) .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* .timestamp {
     font-size: 12px;
     color: var(--text);
     margin: 2px;
+    margin-right: 2px;
+} */
+
+/* .timestamp {
+    font-size: 12px;
+    color: inherit;
+} */
+
+.timestamp {
+    font-size: 12px;
+    color: var(--secondary-text); /* fallback, mostly for others */
+    margin: 0 0 0 2px;
 }
+
+.message.own .timestamp {
+    color: var(--own-message-text);    /* red bubble: white text */
+    opacity: 0.82; /* optional: subtlety */
+}
+
+.message:not(.own) .timestamp {
+    color: var(--secondary-text);     /* gray bubble: gray text */
+}
+
 
 .message-text {
     word-wrap: break-word;
@@ -669,12 +790,108 @@ emoji-picker {
 
 }
 
-.double-tick {
-  margin-left: 8px;
+/* .double-tick {
+  margin-left: 2px;
   font-size: 10px;
-  color: #34B7F1;  
-  /* vertical-align: left; */
+  color: #48c7fe;  
   font-weight: bold;
   user-select: none;
+} */
+
+.double-tick {
+    font-size: 13px;
+    color: #48c7fe;
+    margin-left: 4px;
+    vertical-align: middle;
 }
+
+
+
+/* Speech bubble tail for own (user's) messages */
+/* .message.own .message-content {
+    position: relative;
+    background: var(--own-message-bg);
+    color: var(--own-message-text); 
+    border-radius: 18px 0px 18px 18px;
+} */
+
+.message.own .message-content {
+    background: var(--own-message-bg);
+    color: var(--own-message-text);
+    border-radius: 8px 4px 8px 8px;
+    text-align: right; /* right for own - for better effect */
+}
+
+.message.own .message-content::after {
+    content: "";
+    position: absolute;
+    right: -11px;  /* adjust position as needed */
+    top: 0px;     /* vertically center or as you like */
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid var(--own-message-bg); /* makes the 'tail' */
+}
+
+/* Bubble tail for incoming (others') messages */
+/* .message:not(.own) .message-content {
+    position: relative;
+    background: var(--message-bg);
+    border-radius: 0px 18px 18px 18px;
+} */
+
+.message:not(.own):not(.system) .message-content {
+    text-align: left;
+    border-radius: 4px 8px 8px 8px;
+}
+
+.message:not(.own):not(.system) .message-content::before {
+    content: "";
+    position: absolute;
+    left: -11px;
+    top: 0px;
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid var(--message-bg);
+}
+
+.message-body-meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    /* Keeps text at top, meta at bottom */
+}
+
+.message.own .message-main-text {
+    color: var(--own-message-text);
+    text-align: left;
+    margin-right: 10px;
+}
+
+.message:not(.own) .message-main-text {
+    color: var(--text);
+    text-align: left;
+    margin-right: 10px;
+}
+
+.message.own .message-meta {
+    color: #ffffffcc;
+    justify-content: flex-start; /* left side of bubble, for own too */
+}
+
+.header-btn.incognito-on {
+    background: #dc2626;
+    color: #fff;
+    box-shadow: 0 0 0 2px #dc262622;
+}
+.header-btn.incognito-on:hover,
+.header-btn.incognito-on:focus {
+    background: #ba1f1f;
+    color: #fff;
+}
+
 
