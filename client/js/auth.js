@@ -1,5 +1,6 @@
 import { showChat, showNotification } from './ui.js';
 
+
 export async function handleLogin(e) {
     e.preventDefault();
     const username = document.getElementById('loginUsername').value.trim();
@@ -11,7 +12,7 @@ export async function handleLogin(e) {
     }
 
     try {
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch(`/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -52,7 +53,7 @@ export async function handleRegister(e) {
     }
 
     try {
-        const response = await fetch('/api/auth/register', {
+        const response = await fetch(`/api/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

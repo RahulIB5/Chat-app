@@ -119,7 +119,7 @@ export class ChatApp {
 
   async validateToken() {
     try {
-      const response = await fetch('/api/chat/groups', {
+      const response = await fetch(`/api/chat/groups`, {
         headers: { Authorization: `Bearer ${this.token}` },
       });
       if (response.ok) {
@@ -170,7 +170,7 @@ export class ChatApp {
 
   async joinDefaultGroup() {
     try {
-      const response = await fetch('/api/chat/groups', {
+      const response = await fetch(`/api/chat/groups`, {
         headers: { Authorization: `Bearer ${this.token}` },
       });
       if (response.ok) {
@@ -183,7 +183,7 @@ export class ChatApp {
   }
 
   initializeSocket() {
-    this.socket = io({
+    this.socket = io( {
       auth: { token: this.token },
     });
 

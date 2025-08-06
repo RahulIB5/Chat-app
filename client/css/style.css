@@ -394,6 +394,9 @@ body {
 .message-text {
     word-wrap: break-word;
     color: var(--text);
+    display: flex;
+    justify-content: space-between;
+    align-items: last baseline;
 }
 
 .message.own .message-text {
@@ -668,9 +671,9 @@ emoji-picker {
 
 .double-tick {
   margin-left: 8px;
-  font-size: 1.1em;
+  font-size: 10px;
   color: #34B7F1;  
-  vertical-align: middle;
+  /* vertical-align: left; */
   font-weight: bold;
   user-select: none;
 }

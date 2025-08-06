@@ -21,11 +21,7 @@ const io = socketIo(server, {
 
 const prisma = new PrismaClient();
 
-app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
-  methods: ["GET", "POST"],
-  credentials: true           
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client')));
 
@@ -137,7 +133,7 @@ process.on('SIGINT', async () => {
   process.exit();
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
