@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login/Register Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2 id="authTitle">Welcome to Anonymous Chat</h2>
+                    <p>Join the conversation</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form" style="display: block;">
+                    <div id="loginFields">
+                        <div class="input-group">
+                            <label for="loginUsername" class="visually-hidden">Username</label>
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="loginUsername" name="username" placeholder="Username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="loginPassword" class="visually-hidden">Password</label>
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-btn" id="loginSubmitBtn">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="auth-form" style="display: none;">
+                    <div id="registerFields">
+                        <div class="input-group">
+                            <label for="registerUsername" class="visually-hidden">Username</label>
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="registerUsername" name="username" placeholder="Username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="registerEmail" class="visually-hidden">Email</label>
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="registerEmail" name="email" placeholder="Email (optional)">
+                        </div>
+                        <div class="input-group">
+                            <label for="registerPassword" class="visually-hidden">Password</label>
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="registerPassword" name="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="auth-btn" id="registerSubmitBtn">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chat Interface -->
+    <div id="chatContainer" class="chat-container" style="display: none;">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="header-left">
+                <button class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="group-info">
+                    <div class="group-avatar">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="group-details">
+                        <h3 id="groupName">Fun Friday Group</h3>
+                        <p id="groupStatus">Active now</p>
+                                    <div id="typingIndicator" class="typing-indicator" style="display: none;">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span id="typingText">Someone is typing...</span>
+            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="header-btn" id="incognitoBtn" title="Go Incognito">
+                    <i class="fas fa-user-secret"></i>
+                </button>
+                <button class="header-btn" id="modeToggle" title="Toggle Theme">
+                    <i class="fas fa-adjust"></i>
+                </button>
+                <button class="header-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="messages-container" id="messagesContainer">
+            <div class="messages-wrapper" id="messagesWrapper">
+                <!-- Messages will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="message-input-container">
+            <div class="message-input-wrapper">
+                <div class="input-field">
+                    <input type="text" id="messageInput" placeholder="Type a message..." maxlength="1000">
+                </div>
+                <div class="input-actions">
+                    <button class="action-btn" id="emojiBtn" title="Add emoji">
+                        <i class="fas fa-smile"></i>
+                    </button>
+                    <button class="action-btn" id="imageBtn" title="Add image">
+                        <i class="fas fa-image"></i>
+                    </button>
+                    <button class="action-btn" id="attachmentBtn" title="Add attachment">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                </div>
+                <button class="send-btn" id="sendBtn" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>
+    <script src="https://unpkg.com/emoji-picker-element@^1.13.2/index.js" type="module"></script>
+    <script src="js/chat-app.js" type="module"></script>
+</body>
+</html>
