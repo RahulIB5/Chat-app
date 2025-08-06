@@ -78,30 +78,38 @@ export class ChatApp {
             picker.style.display === 'none' ? 'block' : 'none';
       });
 
-    const picker = document.querySelector('emoji-picker');
-    if (picker) {
-      picker.addEventListener('emoji-click', (event) => {
-        const input = document.getElementById('messageInput');
-        if (input) {
-          input.value += event.detail.unicode;
-          input.focus();
-          const emojiPicker = document.getElementById('emojiPicker');
-          if (emojiPicker) emojiPicker.style.display = 'none';
-        }
-      });
+const picker = document.querySelector('emoji-picker');
+if (picker) {
+  picker.addEventListener('emoji-click', (event) => {
+    const input = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    
+    if (input) {
+      input.value += event.detail.unicode;
+      input.focus();
+
+      // ✅ Manually trigger enabling the send button
+      if (sendBtn) sendBtn.disabled = !input.value.trim();
+
+      // Hide emoji picker after selection
+      const emojiPicker = document.getElementById('emojiPicker');
+      if (emojiPicker) emojiPicker.style.display = 'none';
     }
+  });
+}
+
 
     const imageBtn = document.getElementById('imageBtn');
-    if (imageBtn)
-      imageBtn.addEventListener('click', () =>
-        showNotification('Image upload not implemented', 'info')
-      );
+    // if (imageBtn)
+    //   imageBtn.addEventListener('click', () =>
+    //     showNotification('Image upload not implemented', 'info')
+    //   );
 
     const attachmentBtn = document.getElementById('attachmentBtn');
-    if (attachmentBtn)
-      attachmentBtn.addEventListener('click', () =>
-        showNotification('Attachment upload not implemented', 'info')
-      );
+    // if (attachmentBtn)
+    //   attachmentBtn.addEventListener('click', () =>
+    //     showNotification('Attachment upload not implemented', 'info')
+    //   );
 
     const modeToggle = document.getElementById('modeToggle');
     if (modeToggle)
