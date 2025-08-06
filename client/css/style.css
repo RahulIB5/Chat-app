@@ -818,7 +818,7 @@ emoji-picker {
 .message.own .message-content {
     background: var(--own-message-bg);
     color: var(--own-message-text);
-    border-radius: 8px 4px 8px 8px;
+    border-radius: 8px 0px 8px 8px;
     text-align: right; /* right for own - for better effect */
 }
 
@@ -843,7 +843,7 @@ emoji-picker {
 
 .message:not(.own):not(.system) .message-content {
     text-align: left;
-    border-radius: 4px 8px 8px 8px;
+    border-radius: 0px 8px 8px 8px;
 }
 
 .message:not(.own):not(.system) .message-content::before {
