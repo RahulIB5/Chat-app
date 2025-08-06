@@ -372,7 +372,6 @@ body {
 .message-content {
     display: flex;
     flex-direction: column;
-    flex: 1;
     max-width: 75vw;
     padding: 12px 18px 8px 16px;
     position: relative;
