@@ -272,30 +272,40 @@ if (picker) {
     });
   }
 
-  sendMessage() {
-    const input = document.getElementById('messageInput');
-    const content = input.value.trim();
-    if (!content || !this.socket || !this.currentGroup) return;
-    this.socket.emit('send-message', {
-      content,
-      senderId: this.currentUser.id,
+sendMessage() {
+  const input = document.getElementById('messageInput');
+  const content = input.value.trim();
+
+  if (!content || !this.socket || !this.currentGroup) return;
+
+  // Emit only once
+  this.socket.emit('send-message', {
+    content,
+    senderId: this.currentUser.id,
+    groupId: this.currentGroup.id,
+    type: 'TEXT',
+    isAnonymous: this.isAnonymousMode,
+  });
+
+  // Clear input and disable send button
+  input.value = '';
+  const sendBtn = document.getElementById('sendBtn');
+  if (sendBtn) sendBtn.disabled = true;
+
+  // Handle typing stop
+  if (this.isTyping) {
+    this.socket.emit('typing', {
       groupId: this.currentGroup.id,
-      type: 'TEXT',
-      isAnonymous: this.isAnonymousMode,
+      userId: this.currentUser.id,
+      username: this.isAnonymousMode ? 'Anonymous' : this.currentUser.username,
+      isTyping: false,
     });
-    input.value = '';
-    const sendBtn = document.getElementById('sendBtn');
-    if (sendBtn) sendBtn.disabled = true;
-    if (this.isTyping) {
-      this.socket.emit('typing', {
-        groupId: this.currentGroup.id,
-        userId: this.currentUser.id,
-        username: this.isAnonymousMode ? 'Anonymous' : this.currentUser.username,
-        isTyping: false,
-      });
-      this.isTyping = false;
-    }
+    this.isTyping = false;
   }
+}
+
+
+
 
   handleTyping() {
     if (!this.socket || !this.currentGroup) return;
